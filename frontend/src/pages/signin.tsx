@@ -42,7 +42,7 @@ export const SignInPage = () => {
                 navigate("/");
             }
         } catch (err) {
-            setContext(prev => ({ ...prev, error: "Invalid credentials, or user does not exisit for this email" }));
+            setContext(prev => ({ ...prev, error: "Invalid credentials Or user does not exisit for this email" }));
         }
     };
 

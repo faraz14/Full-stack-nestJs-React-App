@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -26,6 +26,9 @@ export class AuthService {
             throw new NotFoundException('User does not exist');
         }
         const isPasswordValid = await bcrypt.compare(password, user.password);
+        if(!isPasswordValid){
+            throw new UnauthorizedException('Invalid username or password combination');
+        }
 
         return {
             access_token: this.jwtService.sign({ email: user.email, sub: user.email }),
